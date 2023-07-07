@@ -14,6 +14,7 @@ function App() {
   const [dates, setDates] = useState(null);
   const [value, setValue] = useState(null);
   const [scrollTop, setScrollTop] = useState(0);
+  const [clientHeight, setClientHeight] = useState(0);
   const disabledDate = (current) => {
     if (!dates) {
       return false;
@@ -49,6 +50,7 @@ function App() {
     // console.log("active")
     const root = document.querySelector("html")
     console.log(root.scrollTop)
+    setClientHeight(root.clientHeight)
     setScrollTop(root.scrollTop)
   }
   return (
@@ -85,9 +87,11 @@ function App() {
       </div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
-          height of Content is {height}
+          height of div ref 1 is {height}
           <br />
           scrollTop is {scrollTop}
+          <br />
+          client Height of html is {clientHeight}
           {
             document.addEventListener("scroll", handler)
           }
