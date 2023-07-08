@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import reactLogo from './assets/react.svg'
@@ -15,6 +15,11 @@ function App() {
   const [value, setValue] = useState(null);
   const [scrollTop, setScrollTop] = useState(0);
   const [clientHeight, setClientHeight] = useState(0);
+  const [isOpen, setIsOpen] = useState(false)
+  const [offsetTop, setOffsetTop] = useState(null)
+  const antPicker = document.querySelector('.ant-picker')
+
+
   const disabledDate = (current) => {
     if (!dates) {
       return false;
@@ -23,7 +28,9 @@ function App() {
     const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 7;
     return !!tooEarly || !!tooLate;
   };
+
   const onOpenChange = (open) => {
+    setIsOpen(open)
     console.log(ref.current.offsetWidth)
     console.log(ref.current.offsetHeight)
     console.log('offsettop of div', ref.current.offsetTop)
@@ -32,6 +39,8 @@ function App() {
     console.log(window.innerHeight)
     console.log(screen.width)
     console.log(screen.height)
+    console.log(open)
+    setOffsetTop(antPicker.offsetTop + antPicker.clientHeight)
     if(screen.width < 480) {
       document.querySelector('.ant-picker-panels').style['flex-direction'] = 'column'
       document.querySelector('.ant-picker-panels').style.overflow = 'auto'
@@ -43,9 +52,28 @@ function App() {
       setDates(null);
     }
   };
+
+  // useLayoutEffect(() => {
+  //   console.log(isOpen, ref.current)
+  //   if(isOpen && ref.current) {
+  //     console.log("vô tới đây rồi nè")
+  //     document.querySelector('.ant-picker-dropdown').style.top = '100px'
+  //     const hai_test = document.querySelector('.hai_test').style.top
+  //     console.log(hai_test)
+  //   }
+  // })
+
   useEffect(() => {
+    // console.log(isOpen, ref.current)
+    // if(isOpen && ref.current) {
+    //   console.log("vô tới đây rồi nè")
+    //   document.querySelector('.ant-picker-dropdown').style.top = '100px'
+    //   const hai_test = document.querySelector('.ant-picker-dropdown').style.top
+    //   console.log(hai_test)
+    // }
     setHeight(ref1.current.clientHeight)
   })
+
   const handler = (event) => {
     // console.log("active")
     const root = document.querySelector("html")
@@ -53,6 +81,7 @@ function App() {
     setClientHeight(root.clientHeight)
     setScrollTop(root.scrollTop)
   }
+
   return (
     <div ref = {ref1}>
       <div>
@@ -83,6 +112,7 @@ function App() {
         }}
         onOpenChange={onOpenChange}
         changeOnBlur
+        popupStyle = {{top: offsetTop}}
         />
       </div>
       <div className="card">
