@@ -30,17 +30,27 @@ function App() {
   };
 
   const onOpenChange = (open) => {
-    setIsOpen(open)
-    console.log(ref.current.offsetWidth)
-    console.log(ref.current.offsetHeight)
-    console.log('offsettop of div', ref.current.offsetTop)
-    console.log('scrolltop of div', ref.current.scrollTop)
-    console.log(window.innerWidth)
-    console.log(window.innerHeight)
-    console.log(screen.width)
-    console.log(screen.height)
     console.log(open)
-    setOffsetTop(antPicker.offsetTop + antPicker.clientHeight)
+    // setIsOpen(open)
+    // console.log(isOpen)
+    setIsOpen((prev) => {
+      prev = open
+      console.log(prev)
+      return prev
+    })
+    // setIsOpen(open, () => {
+    //   console.log(isOpen)
+    // })
+    // console.log(ref.current.offsetWidth)
+    // console.log(ref.current.offsetHeight)
+    // console.log('offsettop of div', ref.current.offsetTop)
+    // console.log('scrolltop of div', ref.current.scrollTop)
+    // console.log(window.innerWidth)
+    // console.log(window.innerHeight)
+    // console.log(screen.width)
+    // console.log(screen.height)
+    // setOffsetTop(antPicker.offsetTop + antPicker.clientHeight)
+    // document.querySelector('.ant-picker-dropdown').style.top = offsetTop
     if(screen.width < 480) {
       document.querySelector('.ant-picker-panels').style['flex-direction'] = 'column'
       document.querySelector('.ant-picker-panels').style.overflow = 'auto'
@@ -53,33 +63,36 @@ function App() {
     }
   };
 
-  // useLayoutEffect(() => {
-  //   console.log(isOpen, ref.current)
-  //   if(isOpen && ref.current) {
-  //     console.log("vô tới đây rồi nè")
-  //     document.querySelector('.ant-picker-dropdown').style.top = '100px'
-  //     const hai_test = document.querySelector('.hai_test').style.top
-  //     console.log(hai_test)
-  //   }
-  // })
+  useLayoutEffect(() => {
+    // console.log(isOpen, ref.current)
+    // if(isOpen && ref.current) {
+    //   console.log("vô tới đây rồi nè")
+    //   document.querySelector('.ant-picker-dropdown').style.top = '100px'
+    //   const hai_test = document.querySelector('.hai_test').style.top
+    //   console.log(hai_test)
+    // }
+  })
 
   useEffect(() => {
     // console.log(isOpen, ref.current)
     // if(isOpen && ref.current) {
     //   console.log("vô tới đây rồi nè")
-    //   document.querySelector('.ant-picker-dropdown').style.top = '100px'
+    //   setOffsetTop(antPicker.offsetTop + antPicker.clientHeight)
+    //   document.querySelector('.ant-picker-dropdown').style.top = 'offsetTop'
     //   const hai_test = document.querySelector('.ant-picker-dropdown').style.top
+    //   console.log(offsetTop)
     //   console.log(hai_test)
     // }
+    console.log(isOpen)
     setHeight(ref1.current.clientHeight)
   })
 
   const handler = (event) => {
     // console.log("active")
-    const root = document.querySelector("html")
-    console.log(root.scrollTop)
-    setClientHeight(root.clientHeight)
-    setScrollTop(root.scrollTop)
+    // const root = document.querySelector("html")
+    // console.log(root.scrollTop)
+    // setClientHeight(root.clientHeight)
+    // setScrollTop(root.scrollTop)
   }
 
   return (
@@ -112,7 +125,7 @@ function App() {
         }}
         onOpenChange={onOpenChange}
         changeOnBlur
-        popupStyle = {{top: offsetTop}}
+        // popupStyle = {{top: offsetTop}}
         />
       </div>
       <div className="card">
