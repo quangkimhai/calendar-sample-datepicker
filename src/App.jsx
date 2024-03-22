@@ -4,7 +4,10 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space, Form, Button } from 'antd';
+import MultipleDatePicker from './MultipleDatePicker';
+import dayjs from 'dayjs';
+
 const { RangePicker } = DatePicker;
 function App() {
   const ref = useRef(null)
@@ -21,16 +24,23 @@ function App() {
 
 
   const disabledDate = (current) => {
-    if (!dates) {
-      return false;
-    }
-    const tooLate = dates[0] && current.diff(dates[0], 'days') >= 7;
-    const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 7;
-    return !!tooEarly || !!tooLate;
+    // if (!dates) {
+    //   return false;
+    // }
+    // const tooLate = dates[0] && current.diff(dates[0], 'days') >= 7;
+    // const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 7;
+    // return !!tooEarly || !!tooLate;
+
+    // return current && current < dayjs().endOf('day');
+    
+    console.log(current);
+    console.log(dayjs('2023-07-10'));
+    const filter = current.get('date') == dayjs('2023-07-10').get('date') && current.get('month') == dayjs('2023-07-10').get('month') && current.get('year') == dayjs('2023-07-10').get('year')
+    return !!filter
   };
 
   const onOpenChange = (open) => {
-    console.log(open)
+    // console.log(open)
     // setIsOpen(open)
     // console.log(isOpen)
     setIsOpen((prev) => {
@@ -51,11 +61,12 @@ function App() {
     // console.log(screen.height)
     // setOffsetTop(antPicker.offsetTop + antPicker.clientHeight)
     // document.querySelector('.ant-picker-dropdown').style.top = offsetTop
-    if(screen.width < 480) {
-      document.querySelector('.ant-picker-panels').style['flex-direction'] = 'column'
-      document.querySelector('.ant-picker-panels').style.overflow = 'auto'
-      document.querySelector('.ant-picker-panels').style.height = (ref.current.offsetWidth+20) + 'px'
-    }
+
+    // if(screen.width < 480) {
+    //   document.querySelector('.ant-picker-panels').style['flex-direction'] = 'column'
+    //   document.querySelector('.ant-picker-panels').style.overflow = 'auto'
+    //   document.querySelector('.ant-picker-panels').style.height = (ref.current.offsetWidth+20) + 'px'
+    // }
     if (open) {
       setDates([null, null]);
     } else {
@@ -83,8 +94,8 @@ function App() {
     //   console.log(offsetTop)
     //   console.log(hai_test)
     // }
-    console.log(isOpen)
-    setHeight(ref1.current.clientHeight)
+    // console.log(isOpen)
+    // setHeight(ref1.current.clientHeight)
   })
 
   const handler = (event) => {
@@ -128,6 +139,20 @@ function App() {
         // popupStyle = {{top: offsetTop}}
         />
       </div>
+      <Form
+      onFinish={(values) => {
+        console.log("Success:", values);
+      }}
+      >
+      <Form.Item name="mulitiple" label="Select">
+        <MultipleDatePicker selectProps={{ style: { width: "400px" } }} />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+      </Form>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           height of div ref 1 is {height}
